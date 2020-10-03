@@ -1,0 +1,29 @@
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" routerLink="/home"><img src="favicon.ico"></a>
+      <a class="navbar-brand" routerLink="/home">AuctionBro</a>
+    </div>
+    <div class="float-right">
+      <a routerLink="products" routerLinkActive="active">View Products</a>
+      <a routerLink="sellproduct" routerLinkActive="active">Sell Product</a>
+      <a routerLink="mybids" routerLinkActive="active">View My Bids</a>
+      <a routerLink="myauctions" routerLinkActive="active">My Auctions</a>
+      <div class="float-right d-flex">
+        <div class="drop-div">
+          <a class="drop-btn">Orders</a>
+          <div class="drop-down">
+            <a routerLink="purchased">Purchased</a>
+            <a routerLink="sold">Sold</a>
+          </div>
+        </div>
+        <div class="float-right">
+          <a (click)="logout()" class="">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>
+</body>

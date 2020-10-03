@@ -1,0 +1,17 @@
+<h1 class="text-center m-2 p-2">Welcome {{currentUser[0].toUpperCase()+currentUser.substring(1).toLowerCase()}}!!</h1>
+<div class="row m-1">
+  <div class="col-sm-4" (click)="bidProduct(product)" *ngFor="let product of products">
+    <div class="card mb-4 shadow-sm">
+      <img [src]="product.imageurl" width="250px" height="250px" class="rounded mx-auto ">
+      <div class="d-flex card-body" style="flex-direction: column;">
+        <h1>{{product.productname}}</h1>
+        <p class="card-text">{{product.description}}</p>
+        <p class="text-muted">Seller : {{product.seller.sellername}}</p>
+        <h5>Price:{{product.initialbid | currency}}</h5>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container md-6 shadow-sm" *ngIf="isEmpty">
+  <h1 class="text-center">Sorry, <br>Currently We don't have any Products in Auction...<br><small class="text-primary"> Thanks for Visiting the Site..</small></h1>
+</div>

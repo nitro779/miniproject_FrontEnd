@@ -1,0 +1,15 @@
+.invalid-input {
+  border-radius: 5px;
+  border: 2px solid #f03608;
+}
+body{
+  position: relative;
+  background-image: url("src/assets/images/myRegister.jpg") ;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+*{
+  font-family: Montserrat, sans-serif;
+  font-weight: bold;
+}

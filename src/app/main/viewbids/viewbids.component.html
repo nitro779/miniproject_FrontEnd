@@ -1,0 +1,21 @@
+<h1 class="text-center">Your Bids</h1>
+<div class="row m-1">
+    <div class="col-sm-4" *ngFor="let bid of bids">
+      <div class="card mb-4 shadow-sm">
+        <img [src]="bid.product.imageurl" width="250px" height="250px" class="rounded mx-auto ">
+        <div class="d-flex card-body" style="flex-direction: column;">
+          <h1>{{bid.product.productname}}</h1>
+          <p class="card-text">{{bid.product.description}}</p>
+          <p class="text-muted">Seller : {{bid.product.seller.sellername}}</p>
+          <h5>Initial Bid : {{ bid.product.initialbid | currency}}</h5>
+          <h5>Your Bid : {{ bid.bidval | currency}}</h5><br>
+          <div *ngIf="bid.status">
+            <h5>Bid Status :</h5><h6> Your Bid has been accepted !!!</h6><button (click)="purchaseProduct(bid)" class="btn btn-success">Pay</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container md-6 shadow-sm" *ngIf="isEmpty">
+    <h1 class="text-center">Sorry, <br>You didn't Bid for any Product...<a routerLink="..">Click here</a>To Go Products Page<br><small class="text-primary"> Thanks for Visiting the Site..</small></h1>
+  </div>

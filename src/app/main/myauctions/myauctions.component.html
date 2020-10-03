@@ -1,0 +1,41 @@
+<h2 class="text-center text-primary">Your cuurently acutioned products:</h2><br>
+<div *ngIf="empty" class="text-success text-center">
+  <h3>
+    You don't have any products in the Auction...
+    <small>Why waiting, Go and add products</small>
+  </h3>
+</div>
+<div class="row m-2">
+    <div class="col-md-4 mb-3" *ngFor="let product of myProducts">
+      <div class="card shadow-sm">
+        <img [src]="product.imageurl" width="250px" height="250px" class="rounded mx-auto d-block">
+        <div class="d-flex card-body" style="flex-direction: column;">
+          <h1>{{product.productname}}</h1>
+          <p class="card-text">{{product.description}}</p>
+          <p class="text-muted">Seller : {{product.seller.sellername}}</p>
+          <h5>Price:{{product.initialbid | currency}}</h5>
+          <table class="table-sm-1">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Bidder Name</th>
+                <th scope="col">Bid Value</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+              <tbody *ngFor="let bid of product.bids;let i=index">
+                <tr>
+                  <td>{{i+1}}</td>
+                  <td>{{bid.biddername}}</td>
+                  <td>{{bid.bidval}}</td>
+                  <td><button (click)="acceptBid(bid)" class="btn btn-success">Accept</button></td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+        <div class="d-flex justify-content-end">
+            <h5 class="align-origin">Remove Product From Auction</h5><button (click)="deleteProduct(product)" class="btn btn-danger m-1">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>

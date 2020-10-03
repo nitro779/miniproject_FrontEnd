@@ -1,0 +1,26 @@
+.float-right a{
+  margin-left: 20px;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+}
+.float-right a:hover{
+  background: #3aa9d5;
+  text-decoration: none;
+  font-weight: bold;
+}
+.navbar-brand{
+  color: aliceblue;
+  font-weight: bolder;
+}
+.navbar{
+  font-family: Montserrat, sans-serif;
+  background: #3898c7;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.active{
+  background-color: #3aa9d5;
+}

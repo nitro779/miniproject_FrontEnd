@@ -1,0 +1,51 @@
+<div class="mt-5">
+    <div class="row m-2">
+        <div class="col-md-4 border panel panel-primary ml-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3 class="text-center">Categorize</h3><hr>
+                    <form class="m-2">
+                        <label>View By : </label>
+                        <div class="form-group" class="ml-2">
+                            <input type="radio" name="frequency"><label><b>Daily</b></label>
+                            <input type="radio" class="ml-1" name="frequency"><label><b>Weekly</b></label>
+                            <input type="radio" class="ml-1" name="frequency"><label><b>Monthly</b></label>
+                            <input type="radio" class="ml-1" name="frequency"><label><b>Yearly</b></label>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    Panel Footer
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 border-left ml-3">
+            <h3 class="text-center">Purchased Products</h3>
+            <div class="row">
+                <div class="col-6" *ngFor="let order of orders">
+                    <div class="card">
+                        <div class="card-head">
+                            <h3 class="text-center text-primary text-bolder">{{order.productname}}</h3>
+                            <hr>
+                        </div>
+                        <div class="card-body row">
+                            <div class="col-5 border-right">
+                                <img [src]="order.imageurl" width="120px" height="120px">
+                            </div>
+                            <div class="col-7 border-left">
+                                    <p>Cateogry : <strong>{{order.category}}</strong></p>
+                                    <p>Order Id : <strong>{{order.id}}</strong></p>
+                                    <p>Order Date : <strong>{{order.order_date | date}}</strong></p>
+                                    <p>Price : <strong>{{order.price | currency}}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="container d-flex justify-content-end">
+                <strong class="text-end">Total Amount : {{getTotal() | currency}}</strong>
+            </div>
+        </div>
+    </div>
+</div>

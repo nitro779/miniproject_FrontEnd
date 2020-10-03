@@ -1,0 +1,41 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body{
+  color: white;
+  position: relative;
+  background-image: url("src/assets/images/mybg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+h1{
+  font-weight: bolder;
+  font-size: 80px;
+  color: #ff9e1d;
+}
+pre{
+  font-weight: bold;
+  text-justify: distribute-all-lines;
+  color: #ffffff;
+  font-size: 50px;
+  margin-left: 60px;
+  font-family: Montserrat, sans-serif;
+}
+#element{
+  justify-content: center;
+  align-content: center;
+  font-family: Montserrat, sans-serif;
+}
+a{
+  color: white;
+  margin-left: 30px;
+  font-size: 40px;
+}
+a:hover{
+  font-weight: bold;
+  border-radius: 5px;
+  color: #ff9e1d;
+  text-decoration: none;
+}

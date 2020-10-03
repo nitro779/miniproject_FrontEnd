@@ -1,0 +1,16 @@
+.invalid-input {
+  border-radius: 5px;
+  border: 2px solid #f03608;
+}
+body{
+  position: relative;
+  background-image: url("../../../assets/images/myLogin.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.mystyle{
+  font-family: Montserrat, sans-serif;
+  color: white;
+  font-weight: bold;
+}

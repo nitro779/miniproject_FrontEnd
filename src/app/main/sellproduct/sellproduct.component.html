@@ -1,0 +1,47 @@
+<div class="row container-fluid justify-content-center">
+    <div class="col-5">
+        <div class="text-center">
+            <h1 class="h3">Sell Product</h1>
+        </div>
+        <form [formGroup]="sellerForm" (ngSubmit)="auctionProduct()">
+            <div class="form-group">
+                <p>Product Name</p>
+                <input type="text" class="form-control" formControlName="productname"
+                 [class.invalid-input]="sellerForm.get('productname').touched && sellerForm.get('productname').invalid" >
+            </div>
+            <div *ngIf="sellerForm.get('productname').touched && sellerForm.get('productname').invalid">
+                <small class="text-danger">Enter the productname</small>
+            </div>
+            <div class="form-group">
+                <p>Product Category</p>
+                <select class="form-control" formControlName='category'>
+                    <option selected value="">Choose One Category</option>
+                    <option value="Mobiles">Mobiles</option>
+                    <option value="Laptops & Computers">Laptops & Computers</option>
+                    <option value="Fruits">Fruits</option>
+                    <option value="Furniture">Furniture</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <p class="">Minimum Bid</p>
+                <input type="number" class="form-control" formControlName="initialbid"
+                [class.invalid-input]="sellerForm.get('initialbid').touched && sellerForm.get('initialbid').invalid">
+            </div>
+            <div *ngIf="sellerForm.get('initialbid').touched && sellerForm.get('initialbid').invalid">
+                <small class="text-danger" *ngIf="sellerForm.get('initialbid').errors?.required">Please Set Minimum Bid Value</small>
+            </div>
+            <div class="form-group">
+                <p>Description</p>
+                <input type="text" class="form-control" formControlName="description">
+            </div>
+            <div class="form-group">
+                <p>Product Image Url</p>
+                <input type="text" class="formControl" formControlName='imageurl'>
+            </div>
+            <button [disabled]="!sellerForm.valid" class="btn btn-primary">Auction</button>
+        </form>
+    </div>
+    <div *ngIf="sellerForm.get('imageurl').touched" class="col-5 align-content-left">
+        <img [src]="sellerForm.get('imageurl').value" width="440px" height="440px">
+    </div>
+</div>
