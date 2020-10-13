@@ -1,29 +1,41 @@
 <body>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" routerLink="/home"><img src="favicon.ico"></a>
-      <a class="navbar-brand" routerLink="/home">AuctionBro</a>
-    </div>
-    <div class="float-right">
-      <a routerLink="products" routerLinkActive="active">View Products</a>
-      <a routerLink="sellproduct" routerLinkActive="active">Sell Product</a>
-      <a routerLink="mybids" routerLinkActive="active">View My Bids</a>
-      <a routerLink="myauctions" routerLinkActive="active">My Auctions</a>
-      <div class="float-right d-flex">
-        <div class="drop-div">
-          <a class="drop-btn">Orders</a>
-          <div class="drop-down">
-            <a routerLink="purchased">Purchased</a>
-            <a routerLink="sold">Sold</a>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" routerLink="/home"><img src="\assets\images\logo.png" style="border-radius: 50%;" height="40px" width="40px"></a>
+        <a class="navbar-brand" routerLink="/home">Bidding BaBa</a>
+      </div>
+      <div class="float-right">
+        <a routerLink="products" routerLinkActive="active">View Products</a>
+        <div class="float-right d-flex">
+          <div class="float-right">
+            <div class="drop-div-nav">
+              <a class="drop-btn-nav">{{name}}</a>
+              <div class="drop-down-nav m-0">
+                <a (click)="logout()" class="m-0">Logout</a>
+              </div>
+            </div>
+
           </div>
         </div>
-        <div class="float-right">
-          <a (click)="logout()" class="">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <div id="sidenav">
+    <div class="mt-5">
+      <a routerLink="sellproduct" routerLinkActive="active">Sell Product</a>
+      <a routerLink="mybids" routerLinkActive="active">Placed Bids</a>
+      <a routerLink="myauctions" routerLinkActive="active">Received Bids</a>
+      <div class="drop-div">
+        <a class="drop-btn">Orders</a>
+        <div class="drop-down">
+          <a routerLink="purchased">Purchased</a>
+          <a routerLink="sold">Sold</a>
         </div>
       </div>
     </div>
   </div>
-</nav>
-<router-outlet></router-outlet>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </body>

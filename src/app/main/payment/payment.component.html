@@ -1,84 +1,100 @@
 <body>
-    <div class="container mt-5">
-        <div class="row shadow-sm">
-            <img [src]="bid.product.imageurl" width="200" height="200" class="col-4">
-            <div class="col-8">
-                <h5 class="text-center text-success">{{bid.product.productname}}</h5>
-                <p><strong>Description : </strong> {{bid.product.description}}</p>
-                <strong>BidValue : </strong><p style="display: inline;">{{bid.bidval | currency}}</p>
+    <body>
+        <div class="container mt-3">
+            <div class="row shadow-sm">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <img [src]="bid.product.image" width="50" height="50" style="margin-left: auto;margin-right: auto;border-radius: 50%;display: block;">
+                            <td><h5>{{bid.product.productname}}</h5></td>
+                            <td><p>{{bid.product.description}}</p></td>
+                            <td><p style="display: inline;">{{bid.bidval | currency}}</p></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
-    <div class="container mt-5 mb-4 shadow-sm">
-        <h3 class="text-center text-primary"><u>Payment Details</u></h3>
-        <form style="padding: 20px;" [formGroup]="cardDetails" (ngSubmit)="placeOrder(bid)" class="shadow-sm">
-            <h5><u> Card Details :</u></h5>
-            <div class="form-row">
-                <div class="form-group col-6">
-                    <label>Card Holder's Name : </label>
-                    <input placeholder="Card Holder's Name" pattern="[^0-9]*" class="form-control" formControlName='cardholdername' [class.invalid-input]="cardDetails.get('cardholdername').touched && cardDetails.get('cardholdername').invalid">
-                    <div *ngIf="cardDetails.get('cardholdername').touched && cardDetails.get('cardholdername').invalid">
-                        <small class="text-danger" *ngIf="cardDetails.get('cardholdername').errors?.required">name can't be empty</small>
-                        <small class="text-danger" *ngIf="cardDetails.get('cardholdername').errors?.pattern">enter valid name</small>
-                    </div>
-                </div>
-                <div class="form-group col-6">
-                    <label>Card Number : </label>
-                    <input placeholder="Card Number" pattern="[0-9]{16}" onKeyPress="if(this.value.length==16) return false;" type="number" class="form-control" formControlName='cardnumber'
-                        [class.invalid-input]="cardDetails.get('cardnumber').touched && cardDetails.get('cardnumber').invalid">
-                    <div *ngIf="cardDetails.get('cardnumber').touched && cardDetails.get('cardnumber').invalid">
-                            <small class="text-danger" *ngIf="cardDetails.get('cardnumber').errors?.required">enter card details</small>
-                            <small class="text-danger" *ngIf="cardDetails.get('cardnumber').errors?.pattern">enter valid card details</small>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row ">
-                <div class="form-group col-6">
-                    <label>Expiry : </label>
-                    <div class="form-row">
-                        <div class="col-6 form-group">
-                            <select class="form-control" formControlName='month' [class.invalid-input]="cardDetails.get('month').touched && cardDetails.get('month').invalid">
-                                <option selected value="">Month</option>
-                                <option *ngFor="let m of months;let i=index" [value]='i+1' >{{m}}</option>
-                            </select>
-                            <small class="text-danger" *ngIf="cardDetails.get('month').touched && cardDetails.get('month').invalid">select month</small>
+        <div class="container mt-5 mb-4 shadow-sm">
+            <h3 class="text-center text-primary"><u>Payment Details</u></h3>
+            <form style="padding: 20px;" [formGroup]="cardDetails" (ngSubmit)="placeOrder(bid)" class="shadow-sm">
+                <h5><u> Card Details :</u></h5>
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        <label>Card Holder's Name : </label>
+                        <input placeholder="Card Holder's Name" pattern="[^0-9]*" class="form-control" formControlName='cardholder' 
+                            [class.invalid-input]="cardDetails.get('cardholder').touched && cardDetails.get('cardholder').invalid">
+                        <div *ngIf="cardDetails.get('cardholder').touched && cardDetails.get('cardholder').invalid">
+                            <small class="text-danger" *ngIf="cardDetails.get('cardholder').errors?.required">name can't be empty</small>
+                            <small class="text-danger" *ngIf="cardDetails.get('cardholder').errors?.pattern">enter valid name</small>
                         </div>
-                        <div class="col-6 form-group">
-                            <select class="form-control" formControlName='year'[class.invalid-input]="cardDetails.get('year').touched && cardDetails.get('year').invalid">
-                                <option selected value="">Year</option>
-                                <option *ngFor="let y of year;" [value]='y'>{{y}}</option>
-                            </select>
-                            <small class="text-danger" *ngIf="cardDetails.get('year').touched && cardDetails.get('year').invalid">select year</small>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Card Number : </label>
+                        <input placeholder="Card Number" pattern="[0-9]{16}" onKeyPress="if(this.value.length==16) return false;" type="number" class="form-control" formControlName='cardnumber'
+                            [class.invalid-input]="cardDetails.get('cardnumber').touched && cardDetails.get('cardnumber').invalid">
+                        <div *ngIf="cardDetails.get('cardnumber').touched && cardDetails.get('cardnumber').invalid">
+                                <small class="text-danger" *ngIf="cardDetails.get('cardnumber').errors?.required">enter card details</small>
+                                <small class="text-danger" *ngIf="cardDetails.get('cardnumber').errors?.pattern">enter valid card details</small>
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-6">
-                    <label>CVV : </label>
-                    <input placeholder="CVV" type="number" pattern="\d{3}"  onKeyPress="if(this.value.length==3) return false;"  class="form-control" formControlName="cvv"
-                        [class.invalid-input]="cardDetails.get('cvv').touched && cardDetails.get('cvv').invalid">
-                    <div *ngIf="cardDetails.get('cvv').touched && cardDetails.get('cvv').invalid">
-                            <small class="text-danger" *ngIf="cardDetails.get('cvv').errors?.required">enter cvv</small>
-                            <small class="text-danger" *ngIf="cardDetails.get('cvv').errors?.pattern">enter valid cvv</small>
+                <div class="form-row ">
+                    <div class="form-group col-6">
+                        <label>Expiry : </label>
+                        <div class="form-row">
+                            <div class="col-6 form-group">
+                                <select class="form-control" formControlName='month' [class.invalid-input]="cardDetails.get('month').touched && cardDetails.get('month').invalid">
+                                    <option selected value="">Month</option>
+                                    <option *ngFor="let m of months;let i=index" [value]='i+1' >{{m}}</option>
+                                </select>
+                                <small class="text-danger" *ngIf="cardDetails.get('month').touched && cardDetails.get('month').invalid">select month</small>
+                            </div>
+                            <div class="col-6 form-group">
+                                <select class="form-control" formControlName='year'[class.invalid-input]="cardDetails.get('year').touched && cardDetails.get('year').invalid">
+                                    <option selected value="">Year</option>
+                                    <option *ngFor="let y of year;" [value]='y'>{{y}}</option>
+                                </select>
+                                <small class="text-danger" *ngIf="cardDetails.get('year').touched && cardDetails.get('year').invalid">select year</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-6">
+                        <label>CVV : </label>
+                        <input placeholder="CVV" type="number" pattern="\d{3}"  onKeyPress="if(this.value.length==3) return false;"  class="form-control" formControlName="cvv"
+                            [class.invalid-input]="cardDetails.get('cvv').touched && cardDetails.get('cvv').invalid">
+                        <div *ngIf="cardDetails.get('cvv').touched && cardDetails.get('cvv').invalid">
+                                <small class="text-danger" *ngIf="cardDetails.get('cvv').errors?.required">enter cvv</small>
+                                <small class="text-danger" *ngIf="cardDetails.get('cvv').errors?.pattern">enter valid cvv</small>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-row justify-content-center">
-                <div class="col-6 form-check form-group">
-                    <input type="checkbox" value="true" formControlName='save'><label style="margin-left: 5px;">Save Card Details</label>
+                <div class="form-row justify-content-center">
+                    <div class="col-6 form-check form-group">
+                        <input type="checkbox" value="true" formControlName='save'><label style="margin-left: 5px;">Save Card Details</label>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row justify-content-center">
-                <div class="col-2">
-                    <input type="submit" [disabled]="cardDetails.invalid" [value]="'Pay '+(bid.bidval | currency)" class="form-control btn-success">
+                <div class="form-row justify-content-center">
+                    <div class="col-2">
+                        <input type="submit" [disabled]="cardDetails.invalid" [value]="'Pay '+(bid.bidval | currency)" class="form-control btn-success">
+                    </div>
                 </div>
-            </div>
-            <div>
-                <h6>Saved Cards : </h6>
-                <div>
-
+                <div *ngIf="savedCards">
+                    <h6>Saved Cards : </h6>
+                    <div class="form-group ml-5">
+                        <div *ngFor="let card of savedCards">
+                            <input type="radio" name="card" [value] = "card" (click)="setCardDetails(card)" class="mb-4"><strong style="display: inline;"> {{"    "+card.cardnumber.toString().substring(0,4)+"*****"+card.cardnumber.toString().substring(12,16)}} </strong>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </form>
-        {{cardDetails.value | json }}
-    </div>
+            </form>
+        </div>
+    </body>
 </body>

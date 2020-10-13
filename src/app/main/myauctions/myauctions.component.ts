@@ -1,8 +1,7 @@
-import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
 import { BiddingService } from 'src/app/services/bidding.service';
 import { ProductsService } from 'src/app/services/products.service';
-import { Product } from '../product';
 
 @Component({
   selector: 'app-myauctions',
@@ -11,18 +10,30 @@ import { Product } from '../product';
 })
 export class MyauctionsComponent implements OnInit {
 
-  myProducts:Product[]
+  myProducts:any
   empty
-  constructor(private productService:ProductsService,private bidsService:BiddingService) { }
+  isAccepted = false;
+  constructor(private productService:ProductsService,private bidsService:BiddingService,private apiService:ApiService) { }
 
   ngOnInit(): void {
-    this.productService.getSellerProducts(sessionStorage.getItem('authenticatedUser')).subscribe(
-      data => {
+    this.apiService.getUserProducts(sessionStorage.getItem('authenticatedUser')).subscribe(
+      data =>{
         this.myProducts = data
-        for (const iterator of this.myProducts) {
-          const bid = this.bidsService.getBidsByProductId(iterator.product_id).subscribe(
+        for (let index = 0; index < this.myProducts.length; index++) {
+          const element = this.myProducts[index];
+          this.apiService.getBidsReceivedForProduct(element.pid).subscribe(
             data => {
-              iterator.bids = data
+              element.bids = data
+              for (let i = 0; i < element.bids.length; i++) {
+                const bid = element.bids[i];
+                console.log(bid)
+                this.apiService.getUserNameById(bid['customer_id']).subscribe(
+                  data => {
+                    console.log(data)
+                    bid['biddername'] = data['username']
+                  }
+                )
+              }
             }
           )
         }
@@ -34,7 +45,6 @@ export class MyauctionsComponent implements OnInit {
   deleteProduct(product){
     this.productService.deleteProduct(product.product_id).subscribe(
       data => {
-        this.ngOnInit()
         console.log(data)
       },
       error => {
@@ -44,10 +54,15 @@ export class MyauctionsComponent implements OnInit {
   }
 
   acceptBid(bid){
-    this.productService.acceptBid(bid).subscribe(
+    this.apiService.acceptBid(bid).subscribe(
       data => {
-        console.log("Accepted")
+        this.isAccepted = true
       }
     )
+  }
+
+  closeAlert(){
+    this.isAccepted = false
+    this.ngOnInit()
   }
 }

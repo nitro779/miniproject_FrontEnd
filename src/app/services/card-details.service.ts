@@ -13,4 +13,8 @@ export class CardDetailsService {
   saveCardDetails(cardDetails){
     return this.http.post(this.baseUrl,cardDetails)
   }
+
+  getUserCards(user){
+    return this.http.get<any[]>(this.baseUrl+"/"+user)
+  }
 }

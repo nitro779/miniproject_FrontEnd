@@ -1,51 +1,68 @@
-<div class="mt-5">
-    <div class="row m-2">
-        <div class="col-md-4 border panel panel-primary ml-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3 class="text-center">Categorize</h3><hr>
-                    <form class="m-2">
-                        <label>View By : </label>
-                        <div class="form-group" class="ml-2">
-                            <input type="radio" name="frequency"><label><b>Daily</b></label>
-                            <input type="radio" class="ml-1" name="frequency"><label><b>Weekly</b></label>
-                            <input type="radio" class="ml-1" name="frequency"><label><b>Monthly</b></label>
-                            <input type="radio" class="ml-1" name="frequency"><label><b>Yearly</b></label>
-                        </div>
-                    </form>
-                </div>
-                <div class="panel-footer">
-                    Panel Footer
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7 border-left ml-3">
-            <h3 class="text-center">Purchased Products</h3>
-            <div class="row">
-                <div class="col-6" *ngFor="let order of orders">
-                    <div class="card">
-                        <div class="card-head">
-                            <h3 class="text-center text-primary text-bolder">{{order.productname}}</h3>
-                            <hr>
-                        </div>
-                        <div class="card-body row">
-                            <div class="col-5 border-right">
-                                <img [src]="order.imageurl" width="120px" height="120px">
+<body>
+    <div *ngIf = "!isEmpty" >
+        <div class="container" id="top-pannel" >
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="text-center">Categorize</h3><hr>
+                        <form>
+                            <label>View By : </label>
+                            <div class="form-group">
+                                <input type="radio" name="frequency" class="ml-5" (click)="getAllOrders()"><label><b>All</b></label>
+                                <input type="radio" name="frequency" class="ml-5" (click)="getSortedOrders('today')"><label><b>Today</b></label>
+                                <input type="radio" name="frequency" class="ml-5" (click)="getSortedOrders('week')"><label><b>Weekly</b></label>
+                                <input type="radio" name="frequency" class="ml-5" (click)="getSortedOrders('month')"><label><b>Monthly</b></label>
+                                <input type="radio" name="frequency" class="ml-5" (click)="getSortedOrders('year')"><label><b>Yearly</b></label>
                             </div>
-                            <div class="col-7 border-left">
-                                    <p>Cateogry : <strong>{{order.category}}</strong></p>
-                                    <p>Order Id : <strong>{{order.id}}</strong></p>
-                                    <p>Order Date : <strong>{{order.order_date | date}}</strong></p>
-                                    <p>Price : <strong>{{order.price | currency}}</strong></p>
+                            <div class="form-group col-4" id="search">
+                                <input type="search" class="form-control">
+                                <input type="button" class="btn btn-primary" value="Search">
                             </div>
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="d-flex justify-content-end">
+                            <strong class="text-end">Total Amount : {{totalMoney | currency}}</strong>
                         </div>
                     </div>
+                    <hr>
                 </div>
-            </div>
-            <hr>
-            <div class="container d-flex justify-content-end">
-                <strong class="text-end">Total Amount : {{getTotal() | currency}}</strong>
+        </div>
+        <div *ngIf="!isEmpty" class="content">
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead>
+                      <tr class="text-center">
+                        <th>Order Id</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Ordered Date</th>
+                        <th>Price</th>
+                        <th>Seller Name</th>
+                        <th>Image</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let order of orders" class="text-center">
+                        <td>{{order.order_id}}</td>
+                        <td>{{order.product_name}}</td>
+                        <td>{{order.category}}</td>
+                        <td>{{order.order_date}}</td>
+                        <td>{{order.price | currency}}</td>
+                        <td>{{order.seller_name}}</td>
+                        <td><img [src]="order.product_image" width="70px" height="70px" ></td>
+                      </tr>
+                    </tbody>
+                  </table>
             </div>
         </div>
-    </div>
 </div>
+
+<div *ngIf="isEmpty" class="mt-5">
+    <div>
+        <img src="\assets\images\emptyCart.png" style="margin-left: auto; margin-right: auto;display: block">
+    </div>
+    <h3 class="text-center mt-5">
+        No Orders Placed...
+    </h3>
+</div>
+</body>

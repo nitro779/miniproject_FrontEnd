@@ -6,7 +6,6 @@ import {WelcomeComponent} from './home/welcome/welcome.component';
 import {LoginComponent} from './home/login/login.component';
 import {RegisterComponent} from './home/register/register.component';
 import {ProductslistComponent} from './main/productslist/productslist.component';
-import {combineAll} from 'rxjs/operators';
 import {PagenotfoundComponent} from './pagenotfound/pagenotfound.component';
 import {ViewbidsComponent} from './main/viewbids/viewbids.component';
 import {MyauctionsComponent} from './main/myauctions/myauctions.component';
@@ -18,6 +17,7 @@ import { PaymentComponent } from './main/payment/payment.component';
 import { PaymentSuccessComponent } from './main/payment-success/payment-success.component';
 import { PurchasedDetailsComponent } from './main/purchased-details/purchased-details.component';
 import { SoldDetailsComponent } from './main/sold-details/sold-details.component';
+import { ForgotpasswordComponent } from './home/forgotpassword/forgotpassword.component';
 
 const routes: Routes = [
   {
@@ -25,6 +25,7 @@ const routes: Routes = [
     children: [
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
+      {path: 'forgotpassword',component:ForgotpasswordComponent},
       {path: '', component: WelcomeComponent}
     ],
     canActivate:[Routeguard2Service]
@@ -32,16 +33,16 @@ const routes: Routes = [
   {path: 'app', component: MainComponent,
     children: [
       {path: '', component: ProductslistComponent},
-      {path: 'products', component: ProductslistComponent},
-      {path: 'mybids', component: ViewbidsComponent},
-      {path: 'myauctions', component: MyauctionsComponent},
+      {path: 'products', component: ProductslistComponent,runGuardsAndResolvers:"always"},
+      {path: 'mybids', component: ViewbidsComponent,runGuardsAndResolvers:"always"},
+      {path: 'myauctions', component: MyauctionsComponent,runGuardsAndResolvers:"always"},
       {path: 'sellproduct', component: SellproductComponent},
       {path:'bid/:id',component:BiddingComponent},
       {path:'payment/bid/:id',component:PaymentComponent},
       {path:'payment-success',component:PaymentSuccessComponent},
-      {path:'purchased',component:PurchasedDetailsComponent},
-      {path:"sold",component:SoldDetailsComponent},
-      {path: '**', component: PagenotfoundComponent}
+      {path:'purchased',component:PurchasedDetailsComponent,runGuardsAndResolvers:"always"},
+      {path:"sold",component:SoldDetailsComponent,runGuardsAndResolvers:"always"},
+      {path: '**', component: PagenotfoundComponent,runGuardsAndResolvers:"always"}
     ],
       canActivate: [RouterguardService]
   },
@@ -50,7 +51,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    onSameUrlNavigation: 'reload'
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
@@ -61,6 +64,7 @@ export const routesList = [HomeComponent,
   RegisterComponent,
   WelcomeComponent,
   PagenotfoundComponent,
+  ForgotpasswordComponent,
   ProductslistComponent,
   ViewbidsComponent,
   MyauctionsComponent,

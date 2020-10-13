@@ -1,34 +1,42 @@
-<h2 class="text-center text-primary">Your cuurently acutioned products:</h2><br>
+<body>
+  <h2 class="text-center text-primary">Your cuurently acutioned products:</h2><br>
 <div *ngIf="empty" class="text-success text-center">
+  <div class="align-content-center justify-content-center">
+    <img src="\assets\images\no_results_found2.png" style="margin-left: auto; margin-right: auto;display: block;border-radius: 100%;height: 300px;">
+  </div>
   <h3>
     You don't have any products in the Auction...
     <small>Why waiting, Go and add products</small>
   </h3>
 </div>
+<div *ngIf="isAccepted" class="alert alert-success alert-dismissible fade show m-3 text-center" role="alert">
+  <strong class="text-center bolder">Bid Accepted And Successfully Removed the Product From Auction</strong><br>
+  <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <div class="row m-2">
     <div class="col-md-4 mb-3" *ngFor="let product of myProducts">
       <div class="card shadow-sm">
-        <img [src]="product.imageurl" width="250px" height="250px" class="rounded mx-auto d-block">
+        <img [src]="product.image" width="250px" height="250px" class="rounded mx-auto d-block">
         <div class="d-flex card-body" style="flex-direction: column;">
-          <h1>{{product.productname}}</h1>
-          <p class="card-text">{{product.description}}</p>
-          <p class="text-muted">Seller : {{product.seller.sellername}}</p>
-          <h5>Price:{{product.initialbid | currency}}</h5>
-          <table class="table-sm-1">
+          <h1 class="text-center">{{product.productname}}</h1>
+          <h5 class="mb-4 mt-3">Initialbid : {{product.initialbid | currency}}</h5>
+          <table class="table-sm-1 table-bordered">
             <thead>
               <tr>
-                <th scope="col">No</th>
+                <th scope="col">Bid Id</th>
                 <th scope="col">Bidder Name</th>
                 <th scope="col">Bid Value</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
-              <tbody *ngFor="let bid of product.bids;let i=index">
-                <tr>
+              <tbody>
+                <tr *ngFor="let bid of product.bids;let i=index">
                   <td>{{i+1}}</td>
-                  <td>{{bid.biddername}}</td>
-                  <td>{{bid.bidval}}</td>
-                  <td><button (click)="acceptBid(bid)" class="btn btn-success">Accept</button></td>
+                  <td>{{bid.biddername[0].toUpperCase()+bid.biddername.substring(1)}}</td>
+                  <td>{{bid.bidval | currency}}</td>
+                  <td><button (click)="acceptBid(bid.bid_id)" class="btn btn-success">Accept</button></td>
                 </tr>
               </tbody>
           </table>
@@ -39,3 +47,4 @@
       </div>
     </div>
   </div>
+</body>

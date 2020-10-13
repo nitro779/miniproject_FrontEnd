@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationCancel, Router } from '@angular/router';
-import { range } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
 import { BiddingService } from 'src/app/services/bidding.service';
 import { CardDetailsService } from 'src/app/services/card-details.service';
 import { OrdersService } from 'src/app/services/orders.service';
-import { Product } from '../product';
 
 @Component({
   selector: 'app-payment',
@@ -20,55 +19,44 @@ export class PaymentComponent implements OnInit {
   bidId
   orderDetails={}
   cardDetails
+  savedCards
   constructor(private activatedRoute:ActivatedRoute,private bidsService:BiddingService,
     private router:Router,private builder:FormBuilder,private cardService:CardDetailsService,
-    private ordersService:OrdersService) { }
+    private ordersService:OrdersService,private apiService:ApiService) { }
 
   ngOnInit(): void {
-    this.bidId = (this.activatedRoute.snapshot.paramMap.get('id'))
-    this.bidsService.getBidsById(this.bidId).subscribe(
-      data => {
-        if(data == null){
-          this.router.navigate(['/app'])
-        }else{
-          this.bid = data
-          if(this.bid.status != true){
-            this.router.navigate(['/app'])
-          }
-          console.log(this.bid)
-        } 
-      }
-    )
+    this.fetchData()
     this.cardDetails = this.builder.group({
-      cardholdername : ['',[Validators.required]],
+      cardholder : ['',[Validators.required]],
       cardnumber : ['',[Validators.required]],
       month : ['',[Validators.required]],
       year : ['',[Validators.required]],
       cvv : ['',[Validators.required]],
-      save : ['']
+      save : [''],
+      customer_id:['']
       }
     )
   }
 
   placeOrder(bid){
     if(this.cardDetails.get('save').value){
-      let details = this.cardDetails.value
-      details['month'] = parseInt(details['month'])
-      details['year'] = parseInt(details['year'])
-      details['customer'] = bid.customer
-      this.cardService.saveCardDetails(this.cardDetails.value).subscribe(
+      this.cardDetails.patchValue({month:parseInt(this.cardDetails.get('month').value)})
+      this.cardDetails.patchValue({year:parseInt(this.cardDetails.get('year').value)})
+      this.cardDetails.patchValue({customer_id:bid.customer_id})
+      this.apiService.saveCardDetails(this.cardDetails.value).subscribe(
         data => {
-          console.log("Saved Card Successfully")
-       }
+          console.log(data)
+        }
       )
     }
     this.orderDetails['order_date'] = Date.now()
     this.orderDetails['price'] = this.bid.bidval
-    this.orderDetails['customer'] = this.bid.customer
-    this.orderDetails['bidding_id'] = this.bid.biddingid
+    this.orderDetails['customer_id'] = this.bid.customer_id
     this.createOrderDetails(bid.product)
-    this.ordersService.addOrder(this.orderDetails).subscribe(
+    console.log(this.orderDetails)
+    this.apiService.addOrderDetails(this.orderDetails).subscribe(
       data => {
+        console.log(data)
         this.router.navigate(['app/payment-success'])
       }
     )
@@ -85,11 +73,38 @@ export class PaymentComponent implements OnInit {
   }
 
   createOrderDetails(product){
-    this.orderDetails['productid'] = product.product_id
-    this.orderDetails['productname'] = product.productname
+    this.orderDetails['product_id'] = product.pid
+    this.orderDetails['product_name'] = product.productname
     this.orderDetails['category'] = product.category
-    this.orderDetails['imageurl'] = product.imageurl
-    this.orderDetails['description'] = product.description
-    this.orderDetails['seller'] = product.seller
+    this.orderDetails['product_image'] = product.image
+    this.orderDetails['seller_id'] = product.seller_id
+  }
+
+  setCardDetails(card){
+    this.cardDetails.patchValue(card)
+  }
+
+  fetchData(){
+    this.bidId = (this.activatedRoute.snapshot.paramMap.get('id'))
+    this.apiService.getBidByBidId(this.bidId).subscribe(
+      data => {
+        this.bid = data
+        this.apiService.getProductByProductId(this.bid['product_id']).subscribe(
+          data => {
+            this.bid['product'] = data
+          }
+        )
+      }
+    )
+    this.apiService.getUserId(sessionStorage.getItem('authenticatedUser')).subscribe(
+      data => {
+        this.apiService.getCardDetailsByCustomer(data).subscribe(
+          data => {
+            console.log(data)
+            this.savedCards = data
+          }
+        )
+      }
+    )
   }
 }

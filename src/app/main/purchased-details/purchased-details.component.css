@@ -1,0 +1,38 @@
+
+body{
+  max-width: 100%;
+}
+  
+  #sidenav{
+    border: 2px solid whitesmoke;
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    text-align: center;
+    background-color: #3898c7;
+    z-index: 1;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 150px;
+  }
+  
+  #sidenav a {
+    padding-top: 15px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #f1f1f1;
+    display: block;
+  }
+  
+  #sidenav a:hover {
+    background: #3aa9d5;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  #search{
+    display: none;
+  }
+  
+
+  

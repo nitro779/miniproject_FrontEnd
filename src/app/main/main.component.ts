@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { ProductslistComponent } from './productslist/productslist.component';
 
@@ -10,9 +11,19 @@ import { ProductslistComponent } from './productslist/productslist.component';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private authenticator:AuthenticationService,private router:Router) { }
+  name
+  constructor(private authenticator:AuthenticationService,private router:Router,private apiService:ApiService) { }
 
   ngOnInit(): void {
+    this.apiService.getUserId(sessionStorage.getItem('authenticatedUser')).subscribe(
+      data => {
+        this.apiService.getUserNameById(data).subscribe(
+          data => {
+            this.name = data['fullname'].toString().split(" ")[1]
+          }
+        )
+      }
+    )
   }
 
   logout(){

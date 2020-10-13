@@ -1,17 +1,28 @@
-<h1 class="text-center m-2 p-2">Welcome {{currentUser[0].toUpperCase()+currentUser.substring(1).toLowerCase()}}!!</h1>
-<div class="row m-1">
-  <div class="col-sm-4" (click)="bidProduct(product)" *ngFor="let product of products">
-    <div class="card mb-4 shadow-sm">
-      <img [src]="product.imageurl" width="250px" height="250px" class="rounded mx-auto ">
-      <div class="d-flex card-body" style="flex-direction: column;">
-        <h1>{{product.productname}}</h1>
-        <p class="card-text">{{product.description}}</p>
-        <p class="text-muted">Seller : {{product.seller.sellername}}</p>
-        <h5>Price:{{product.initialbid | currency}}</h5>
+<div>
+  <div *ngIf="alert" class="alert alert-success alert-dismissible fade show m-3 text-center" role="alert">
+    <strong class="text-center bolder">Welcome {{currentUser[0].toUpperCase() + currentUser.substring(1)}}</strong><br>
+    <button (click)="closeAlert()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="row m-1">
+    <div class="col-sm-4" *ngFor="let product of products">
+      <div class="card mb-4 shadow-sm bg-grey">
+        <img [src]="product.image" width="250px" height="250px" class="rounded mx-auto ">
+        <div class="d-flex card-body center" style="flex-direction: column;">
+          <h2>{{product.productname}}</h2>
+          <p class="card-text ml-5"><strong>Description : </strong>{{product.description}}</p>
+          <p class="card-text ml-5"><strong>Seller : </strong>{{product.sellername}}</p>
+          <h5 class="card-text ml-5 "><strong>Price : </strong>{{product.initialbid | currency}}</h5>
+          <p><button class="btn btn-primary" (click)="bidProduct(product)">Bid</button></p>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div class="container md-6 shadow-sm" *ngIf="isEmpty">
-  <h1 class="text-center">Sorry, <br>Currently We don't have any Products in Auction...<br><small class="text-primary"> Thanks for Visiting the Site..</small></h1>
+  <div class="container-fluid md-6 shadow-sm justify-content-center align-content-center" *ngIf="isEmpty">
+    <div class="align-content-center justify-content-center">
+      <img src="\assets\images\no_products.png" style="margin-left: auto; margin-right: auto;display: block">
+    </div>
+    <h1 class="text-center">Sorry, <br>Currently We don't have any Products in Auction...<br><small class="text-primary"> Thanks for Visiting the Site..</small></h1>
+  </div>
 </div>

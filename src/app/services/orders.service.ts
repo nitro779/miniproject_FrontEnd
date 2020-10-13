@@ -13,6 +13,10 @@ export class OrdersService {
   }
 
   getPurchasedOrders(customername){
-    return this.http.get(this.baseUrl+"/"+customername)
+    return this.http.get(this.baseUrl+"/purchased/"+customername)
+  }
+
+  getSellerOrders(sellername){
+    return this.http.get(this.baseUrl+"/sold/"+sellername)
   }
 }

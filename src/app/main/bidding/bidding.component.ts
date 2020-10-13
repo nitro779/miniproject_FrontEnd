@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 import { BiddingService } from 'src/app/services/bidding.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { BiddingModel } from '../biddingmodel';
@@ -16,40 +17,48 @@ export class BiddingComponent implements OnInit {
   product
   productId
   constructor(private route:ActivatedRoute,private http:HttpClient,private productsService:ProductsService,
-    private router:Router,private builder:FormBuilder,private biddingService:BiddingService) { }
+    private router:Router,private builder:FormBuilder,private apiService:ApiService) { }
 
   ngOnInit(): void {
+    this.productId = this.route.snapshot.paramMap.get('id')
     this.bidForm = this.builder.group({
-      product :[''],
-      biddername: [''],
-      bidval: ['',[Validators.required]]
+      product_id :[this.productId],
+      customer_id: [''],
+      bidval: ['',[Validators.required]],
+      status:[0]
     }
     )
-    this.productId = this.route.snapshot.paramMap.get('id')
     if(this.productId != null){
-      this.product = this.productsService.getProductById(this.productId).subscribe(
+      this.product = this.apiService.getProductByProductId(this.productId).subscribe(
         data => {
           if(data == null){
             this.router.navigate(['/app/products'])
           }
           this.product = data
+          this.apiService.getUserNameById(this.product.pid).subscribe(
+            data => {
+              this.product['sellername'] = data['username']
+            }
+          )
         }
       )
     }
+    this.apiService.getUserId(sessionStorage.getItem('authenticatedUser')).subscribe(
+      data => {
+        let id = data
+        this.bidForm.patchValue({customer_id:id})
+      }
+    )
   }
 
   isInvalidBid(){
-     return this.product.intialbid > this.bidForm.get('bidval').value
+     return this.product.initialbid > this.bidForm.get('bidval').value
   }
   
   bidForProduct(){
-    this.bidForm.patchValue({'product':this.product})
-    this.bidForm.patchValue({'biddername':sessionStorage.getItem('authenticatedUser')})
-    const bidsModel:BiddingModel = this.bidForm.value
-    console.log(bidsModel)
-    this.biddingService.bidProduct(bidsModel).subscribe(
-      data =>{
-        console.log(data)
+    const bidDetails = this.bidForm.value
+    this.apiService.addBidForProduct(bidDetails).subscribe(
+      data => {
         this.router.navigate(['app/mybids'])
       }
     )

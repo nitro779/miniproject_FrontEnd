@@ -1,15 +1,17 @@
-<div class="d-flex justify-content-center">
-    <div class="card m-1">
-        <div class="card-body m-1">
-            <h1 class="text-center">{{product.productname}}</h1><hr>
-            <strong>Images </strong><img [src]="product.imageurl" width="300" height="300" class="rounded mx-auto">
-            <p><Strong>Description : </Strong>{{product.description}}</p>
-            <p><strong>Seller : </strong>{{product.seller.sellername}}</p>
-            <p><strong>InitialBid : </strong>{{product.initialbid | currency}}</p>
-            <form [formGroup]="bidForm" (ngSubmit)="bidForProduct()">
-                <input type="number" class="form-control-md" formControlName="bidval" >
-                <button class="btn btn-primary ml-5 flex-right" [disabled]="bidForm.invalid || isInvalidBid()">Bid</button>
-            </form>
+<body>
+    <div class="d-flex justify-content-center">
+        <div class="card m-1">
+            <div class="card-body m-1">
+                <h1 class="text-center">{{product.productname}}</h1><hr>
+                <strong>Images </strong><img [src]="product.image" width="300" height="300" class="rounded mx-auto">
+                <p class="card-text ml-5"><Strong>Description : </Strong>{{product.description}}</p>
+                <p class="card-text ml-5"><strong>Seller : </strong>{{product.sellername}}</p>
+                <p class="card-text ml-5"><strong>InitialBid : </strong>{{product.initialbid | currency}}</p>
+                <form [formGroup]="bidForm" (ngSubmit)="bidForProduct()" class="ml-5">
+                    <input type="number" class="form-control-md" formControlName="bidval" >
+                    <button class="btn btn-primary ml-5 flex-right" [disabled]="bidForm.invalid || isInvalidBid()">Bid</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+</body>

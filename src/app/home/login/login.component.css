@@ -3,6 +3,7 @@
   border: 2px solid #f03608;
 }
 body{
+  width: auto;
   position: relative;
   background-image: url("../../../assets/images/myLogin.jpg");
   background-size: cover;

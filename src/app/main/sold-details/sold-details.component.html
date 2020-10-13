@@ -1,1 +1,47 @@
-<p>sold-details works!</p>
+<div class="container" >
+    <div class="row" *ngIf="!isEmpty">
+        <div class="col-md border-left ml-3">
+            <h3 class="text-center">Sold Products</h3>
+            <hr>
+            <div class="row">
+                <table class="table table-bordered ml-1">
+                    <thead>
+                      <tr class="text-center">
+                        <th>Order Id</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Ordered Date</th>
+                        <th>Price</th>
+                        <th>Customer Name</th>
+                        <th>Image</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let order of orders" class="text-center">
+                        <td>{{order.order_id}}</td>
+                        <td>{{order.product_name}}</td>
+                        <td>{{order.category}}</td>
+                        <td>{{order.order_date | date}}</td>
+                        <td>{{order.price | currency}}</td>
+                        <td>{{order.customer_name}}</td>
+                        <td><img [src]="order.product_image" alt="Image" width="50px" height="50px" ></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <hr>
+            </div>
+            <hr>
+            <div class="container d-flex justify-content-end">
+                <strong class="text-end">Total Amount : {{totalMoney | currency}}</strong>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isEmpty" class="mt-5">
+    <div>
+        <img src="\assets\images\emptyCart.png" style="margin-left: auto; margin-right: auto;display: block">
+    </div>
+    <h3 class="text-center mt-5">
+        No Orders Received...
+    </h3>
+</div>

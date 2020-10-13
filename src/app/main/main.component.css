@@ -17,6 +17,7 @@
   font-family: Montserrat, sans-serif;
   background: #3898c7;
   color: white;
+  border: 2px solid gray;
   position:sticky;
   top: 0;
   left: 0;
@@ -33,15 +34,16 @@
 }
 
 body{
-  height: 100%;
-  /*background: linear-gradient(180deg, rgb(109, 188, 253), 70%, #5ac3ec);*/
+  height: auto;
+  width: 100%;
 }
 
 .drop-down{
   display: none;
   position: absolute;
   background-color: #3898c7;
-  min-width: 120px;
+  min-width: 200px;
+  text-align: center;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -58,4 +60,62 @@ body{
 
 .drop-down a:hover{
   background-color: #3aa9d5;
+}
+
+
+#sidenav{
+  border-top: 1px solid whitesmoke;
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  text-align: center;
+  background-color: #3898c7;
+  z-index: 1;
+  left: 0;
+  overflow-x: hidden;
+}
+
+#sidenav a {
+  padding-top: 15px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #f1f1f1;
+  display: block;
+}
+
+#sidenav a:hover {
+  background: #3aa9d5;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 15px;
+}
+
+.content{
+  margin-left: 200px;
+}
+
+.drop-down-nav{
+  display: none;
+  position: absolute;
+  background-color: #3898c7;
+  min-width: 120px;
+  text-align: center;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.drop-down-nav a{
+  color: white;
+  text-decoration: none;
+  display: block;
+}
+
+.drop-div-nav:hover .drop-down-nav{
+  display: block;
+  border-radius: 20px;
+}
+
+.drop-down-nav a:hover{
+  background-color: #3aa9d5;
+  border-radius: 20px;
 }
